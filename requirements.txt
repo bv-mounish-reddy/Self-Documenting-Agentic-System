@@ -1,0 +1,12 @@
+langgraph
+langchain
+langchain-google-genai
+langchain-community
+langchain-experimental
+tavily-python
+python-dotenv
+pyppeteer
+pydantic
+PyYAML
+graphviz
+requests
