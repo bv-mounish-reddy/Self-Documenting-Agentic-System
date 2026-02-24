@@ -10,3 +10,6 @@ pydantic
 PyYAML
 graphviz
 requests
+fastapi
+uvicorn
+streamlit
