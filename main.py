@@ -299,20 +299,20 @@ def should_skip_documentation(state: CodeState) -> str:
 
 # File saving functions
 def save_documented_code(documented_code: str):
-    """Save documented code to code.py"""
+    """Save documented code to tests/generated_code.py"""
     try:
-        with open("code.py", "w", encoding="utf-8") as f:
+        with open("tests/generated_code.py", "w", encoding="utf-8") as f:
             f.write(documented_code)
-        print("  - Documented code saved to code.py")
+        print("  - Documented code saved to tests/generated_code.py")
     except Exception as e:
         print(f"  - Error saving code.py: {e}")
 
 def save_analysis_results(state: CodeState):
-    """Save analysis results to analysis.txt"""
+    """Save analysis results to tests/analysis.txt"""
     try:
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        with open("analysis.txt", "w", encoding="utf-8") as f:
+        with open("tests/analysis.txt", "w", encoding="utf-8") as f:
             f.write(f"# Code Analysis Results\n")
             f.write(f"Generated on: {timestamp}\n\n")
 
@@ -346,9 +346,9 @@ def save_analysis_results(state: CodeState):
             f.write("3. Test the code with various input scenarios\n")
             f.write("4. Validate functionality before production use\n")
 
-        print("  - Analysis results saved to analysis.txt")
+        print("  - Analysis results saved to tests/analysis.txt")
     except Exception as e:
-        print(f"  - Error saving analysis.txt: {e}")
+        print(f"  - Error saving tests/analysis.txt: {e}")
 
 def final_node(state: CodeState) -> CodeState:
     """Final node: Save results to files"""
@@ -525,6 +525,6 @@ print(f"Results: {result}, {area:.2f}, {division}, {processed}")
 
     print("\nWorkflow completed successfully!")
     print("Output files:")
-    print("  - code.py: Documented code")
-    print("  - analysis.txt: Analysis results")
+    print("  - tests/generated_code.py: Documented code")
+    print("  - tests/analysis.txt: Analysis results")
 

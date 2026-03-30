@@ -9,7 +9,7 @@ LangGraph workflow that analyzes, documents, and validates Python code using a t
 - Comprehensive Code Documentation with docstrings and comments
 - Automated Code Testing and Analysis
 - Workflow Visualization (PNG/Mermaid)
-- Output to `code.py` and `analysis.txt`
+- Output to `tests/generated_code.py` and `tests/analysis.txt`
 
 ## Installation
 
@@ -29,9 +29,9 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
 # Configure environment variables
-# Create .env file with your API keys:
-# GOOGLE_API_KEY=your_key
-# TAVILY_API_KEY=your_key
+# Copy .env.example to .env and add your API keys
+cp .env.example .env
+# Edit .env with your credentials
 ```
 
 ## Configuration
@@ -42,34 +42,28 @@ API keys required:
 
 ## Usage
 
-Run the FastAPI backend and Streamlit UI to use the system interactively.
+### Run Main Workflow
 
-1. Activate the virtual environment
+```bash
+python main.py
+```
 
+This generates `tests/generated_code.py` and `tests/analysis.txt`.
+
+### Run Web Interface (Optional)
+
+1. Start the backend:
+```bash
+python src/backend.py
+```
+
+2. Start the frontend (new terminal):
 ```bash
 source venv/bin/activate
+streamlit run src/frontend.py
 ```
 
-2. Start the backend (foreground)
-
-```bash
-python backend.py
-# or with uvicorn: uvicorn backend:app --reload --host 127.0.0.1 --port 8000
-```
-
-3. Start the frontend (new terminal)
-
-```bash
-source venv/bin/activate
-streamlit run frontend.py
-```
-
-Endpoints:
-
-- Health check: `GET /health`
-- Analyze: `POST /analyze` with JSON `{ "code": "<python code>" }`
-
-Add your API keys to the `.env` file before running the backend if required. The original `main.py` workflow is used by the backend and was not modified.
+API endpoint: `POST /analyze` with `{ "code": "<python code>" }`
 
 ## Project Structure
 
@@ -80,15 +74,20 @@ Add your API keys to the `.env` file before running the backend if required. The
 ├── prompts.yaml         # Node prompts configuration
 ├── requirements.txt     # Python dependencies
 ├── .env                 # Environment variables
-└── README.md            # This documentation
-```
-
-## Output Files
-
-- **code.py**: Original code enhanced with docstrings, inline comments, and warnings
-- **analysis.txt**: Structured analysis including libraries, issues, test results, and guidelines
-
-## Troubleshooting
+└── README.md            # This workflow script (run this)
+├── src/
+│   ├── backend.py       # FastAPI backend
+│   └── frontend.py      # Streamlit UI
+├── tests/
+│   ├── sample_code.py   # Sample code for testing
+│   ├── generated_code.py # Output (generated at runtime)
+│   └── analysis.txt    # Output (generated at runtime)
+├── .env.example         # Environment variables template
+├── requirements.txt     # Python dependencies
+└── prompts.yaml         # Workflow promptsding libraries, issues, test results, and guidelines
+Generated in `tests/` directory:
+- **generated_code.py**: Documented source code with docstrings and comments
+- **analysis.txt**: Analysis results with libraries, issues, and recommendation
 
 - API Key Errors: Verify credentials in `.env` file
 - Import Errors: Ensure all dependencies are installed in virtual environment
